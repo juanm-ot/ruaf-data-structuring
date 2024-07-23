@@ -2,7 +2,8 @@
 
 ## Index
 1. [Introduction](#introduction)
-2. [Repository structure](#repository-structure)
+2. [Solution strategy](#solution-strategy)
+3. [Repository structure](#repository-structure)
 
 
 ## Introduction
@@ -19,6 +20,17 @@ The starting point is a CSV file with unstructured RUAF data. The goal is to tra
 * If a record lacks information, add a “marca_sin_informacion” field with 0 for information present and 1 for no information.
 * Fields should use snake_case notation
 
+## Solution strategy
+
+### First stage
+
+An analysis of the raw data was conducted to identify structures and search patterns. Four repetitive sections of constant length were found. With this in mind, the objective of the first stage is to **transform the unstructured raw data into a structured format**, ensuring data uniqueness and consistency for future transformations.
+
+![int pipeline](resources/int_pipeline.png)
+
+The transformation process is carried out in the **intermediate pipeline**. This pipeline receives the raw file, reads it line by line, identifies the start pattern of each record, and extracts the data contained in each section. Using pandas, a dataframe is created with the columns indicated in the 'structured data' section of the previous diagram.
+
+The function stores a CSV in the intermediate data stage to persist historical data and returns the dataframe for the next stage.
 
 ## Repository structure
 
@@ -27,9 +39,12 @@ The starting point is a CSV file with unstructured RUAF data. The goal is to tra
 .
 ├── data                               # data storage in stages
 │   │── raw
-│   │── intermediate
+│   │── intermediate                   # data output from intermediate pipeline
 │   └── mart
 ├── src                                # contains the work scripts
+│   │── functions.py
+│   └── int_pipeline.py
+├── resources                          # contains no binary files for docs
 ├── .env                               # contains the environment variables
 │
 └── requirements.txt                   
