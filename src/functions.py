@@ -2,6 +2,22 @@ import pandas as pd
 import unidecode
 import numpy as np
 
+def duplicate_column_next_to_original(df, columna):
+    """
+    Duplicate a specified column in a DataFrame, placing the duplicated column 
+    immediately after the original column.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the column to be duplicated.
+    columna (str): The name of the column to duplicate.
+
+    Returns:
+    pd.DataFrame: The DataFrame with the duplicated column added.
+    """
+    pos = df.columns.get_loc(columna) # Find the position of the original column
+    df.insert(pos + 1, f"{columna}_duplicates", df[columna])
+    return df
+
 def format_date(date_str):
     """
     Convert a date string to a specific format.
@@ -37,6 +53,26 @@ def normalize_column(df, column):
     """
     df[column] = df[column].apply(lambda x: unidecode.unidecode(str(x)).lower().replace(' ', '_'))
     return df
+
+def split_columns_by_delimiter(df, column, delimiter, position):
+    """
+    Split the specified column in a DataFrame into multiple values based on a delimiter, 
+    and keep only the value at the specified position.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the column to be split.
+    columna (str): The name of the column to split.
+    delimitador (str): The delimiter used to split the column values.
+    posicion (int): The position of the value to keep from the split results.
+
+    Returns:
+    pd.DataFrame: The DataFrame with the specified column updated to only include 
+                  the value at the specified position after splitting.
+    """
+    df[column] = df[column].str.split(delimiter).str[position]
+    return df
+
+
 
 
 

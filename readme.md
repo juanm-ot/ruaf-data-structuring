@@ -28,9 +28,14 @@ An analysis of the raw data was conducted to identify structures and search patt
 
 ![int pipeline](resources/int_pipeline.png)
 
-The transformation process is carried out in the **intermediate pipeline**. This pipeline receives the raw file, reads it line by line, identifies the start pattern of each record, and extracts the data contained in each section. Using pandas, a dataframe is created with the columns indicated in the 'structured data' section of the previous diagram.
+The transformation process is carried out in the **intermediate pipeline**. This pipeline receives the raw file, reads it line by line, identifies the start pattern of each record, and extracts the data contained in each section. Using pandas, a dataframe is created with *base columns*, including f_consulta, key_fep, tipo_id_num, num_id, field, value and date
 
 The function stores a CSV in the intermediate data stage to persist historical data and returns the dataframe for the next stage.
+
+### Second stage
+The goal at this stage is to perform transformation operations on the DataFrame to achieve the reference format. This stage is coded in the mart pipeline and is divided into three sub-stages: 
+
+1. **Set up intermediate dataframe:** Receives the DataFrame produced by the intermediate pipeline. Normalizes the base columns, separates the first part of tipo_id_num from the second part, adds the second part to a new column called tipo_id_str, and finally creates the aux column as a concatenation of the field and value columns. The resulting aux column will be used in the subsequent sub-stages to generate the columns for the final structure.
 
 ## Repository structure
 
@@ -42,8 +47,10 @@ The function stores a CSV in the intermediate data stage to persist historical d
 │   │── intermediate                   # data output from intermediate pipeline
 │   └── mart
 ├── src                                # contains the work scripts
+│   │── data_dicts.py
 │   │── functions.py
-│   └── int_pipeline.py
+│   │── int_pipeline.py
+│   └── mart_pipeline.py
 ├── resources                          # contains no binary files for docs
 ├── .env                               # contains the environment variables
 │
