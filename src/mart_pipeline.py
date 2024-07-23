@@ -35,6 +35,32 @@ def set_up_int_data(df):
 
     return df
 
+def structuring_dataframe(df):
+    """
+    Restructure the DataFrame by pivoting it based on specified columns and then reordering and renaming the columns.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame to be structured.
+
+    Returns:
+    pd.DataFrame: The restructured DataFrame with pivoted data, reordered, and renamed columns.
+    """
+    try:
+        df_pivot = df.pivot_table(
+            index=['f_consulta', 'key_fep', 'tipo_id_num', 'tipo_id_str', 'num_id'], 
+            columns='aux', 
+            values='value', 
+            aggfunc='first'
+        ).reset_index()
+        df_structured = fn.reorder_and_rename_columns(df_pivot, dicts.base_columns, dicts.set_up_columns)
+    except KeyError as e:
+        raise KeyError(f"column error: {e}")
+    except Exception as e:
+        raise RuntimeError(f"In structuring_dataframe function, an error occurred during df processing: {e}")
+    
+    return df_structured
+
 df_processed = set_up_int_data(df)
-df_processed.to_csv('test.csv' , index=False)
+pivot_df = structuring_dataframe(df_processed)
+pivot_df.to_csv('test.csv' , index=False)
 

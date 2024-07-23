@@ -2,6 +2,7 @@ import pandas as pd
 import unidecode
 import numpy as np
 
+
 def duplicate_column_next_to_original(df, columna):
     """
     Duplicate a specified column in a DataFrame, placing the duplicated column 
@@ -53,6 +54,27 @@ def normalize_column(df, column):
     """
     df[column] = df[column].apply(lambda x: unidecode.unidecode(str(x)).lower().replace(' ', '_'))
     return df
+
+def reorder_and_rename_columns(df, base_columns, rename_columns):
+    """
+    Adjust the columns of a DataFrame by maintaining fixed columns and renaming others 
+    according to a provided dictionary.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame to be adjusted.
+    columnas_fijas (list of str): List of column names to be retained in their original form.
+    columnas_a_renombrar (dict): Dictionary mapping current column names to new names for renaming.
+
+    Returns:
+    pd.DataFrame: The adjusted DataFrame with fixed columns retained and other columns renamed 
+                  and rearranged according to the provided dictionary.
+    """
+    df_base_columns = df[base_columns] # Maintain the fixed columns
+    df_rename_columns = df.rename(columns=rename_columns) # Rename and select columns
+    df_rename_columns = df_rename_columns[list(rename_columns.values())]
+    
+    df_structured = pd.concat([df_base_columns, df_rename_columns], axis=1)
+    return df_structured
 
 def split_columns_by_delimiter(df, column, delimiter, position):
     """
