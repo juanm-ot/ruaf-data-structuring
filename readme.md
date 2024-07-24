@@ -40,6 +40,8 @@ The output of this function is:
 2. **Structuring dataframe:** Receives the DataFrame produced by the first sub-stage of the mart pipeline. It retains the base columns defined as a list in the data_dicts.py file, then uses the pivot_table function on the aux column to generate the new DataFrame structure. Finally, it reorders and renames the resulting columns based on the set_up_columns data dictionary provided in the data_dicts.py script.
 The output of this function is:
 ![sec stage](resources/second_stage_mart_pipeline.png)
+3. **Clean and transform data:** Receives the DataFrame produced by the second sub-stage of the mart pipeline. Performs data cleaning, transformation, and column generation operations to produce the final dataset.
+
 ## Repository structure
 
 ```linux
@@ -50,9 +52,9 @@ The output of this function is:
 │   │── intermediate                   # data output from intermediate pipeline
 │   └── mart
 ├── src                                # contains the work scripts
-│   │── data_dicts.py
-│   │── functions.py
-│   │── int_pipeline.py
+│   │── data_dicts.py                  # stores data structures for manage vars
+│   │── functions.py                   # stores functions for column operation
+│   │── int_pipeline.py                # transform unstructured data into dataframe
 │   └── mart_pipeline.py
 ├── resources                          # contains no binary files for docs
 ├── .env                               # contains the environment variables

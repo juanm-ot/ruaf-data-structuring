@@ -2,6 +2,22 @@ import pandas as pd
 import unidecode
 import numpy as np
 
+def coalesce_columns(df, primary_column, secundary_column):
+    """
+    Combine two columns in a DataFrame by filling missing values in the primary column 
+    with values from the secondary column. The secondary column is then dropped.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the columns to be coalesced.
+    columna_primaria (str): The name of the primary column to retain.
+    columna_secundaria (str): The name of the secondary column whose values will fill in the missing values in the primary column.
+
+    Returns:
+    pd.DataFrame: The DataFrame with the primary column updated and the secondary column removed.
+    """
+    df[primary_column] = df[primary_column].fillna(df[secundary_column])
+    df.drop(columns=[secundary_column], inplace=True)
+    return df
 
 def duplicate_column_next_to_original(df, columna):
     """
@@ -93,9 +109,3 @@ def split_columns_by_delimiter(df, column, delimiter, position):
     """
     df[column] = df[column].str.split(delimiter).str[position]
     return df
-
-
-
-
-
-

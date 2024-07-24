@@ -4,6 +4,7 @@ import functions as fn
 import data_dicts as dicts
 import int_pipeline
 import pandas as pd
+import numpy as np
 
 
 df = int_pipeline.extract_data_int_structure()
@@ -60,7 +61,53 @@ def structuring_dataframe(df):
     
     return df_structured
 
+def clean_and_transform_data(df):
+    """
+    Clean and transform the DataFrame according to specific rules.
+
+    Steps:
+    1. Among the columns used for the pivot, we have num_id. This contains a composite value, so we will separate the data
+    into the columns tipo_id_str_dup and num_id_val
+    2. Handling duplicate columns that reference the same data with a coalesce function
+    3. The column 'marca_sin_informacion' is created, setting it to 1 when num_id (ID from part 2 in S2, S3, and S4) is 
+    equal to num_id_val (ID from the basic information section). If it is different, it indicates the presence of a 
+    record that did not load information
+    4.'sexo' data is embedded in some records of the segundo_apellido. The data was placed in the corresponding column
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame to be cleaned and transformed.
+
+    Returns:
+    pd.DataFrame: The cleaned and transformed DataFrame.
+    """
+    try:
+        # 1
+        df = fn.duplicate_column_next_to_original(df, 'nume_id')
+        df = fn.split_columns_by_delimiter(df, 'nume_id', ' ', 0).rename(columns = {'nume_id':'tipo_id_str_dup'})
+        df = fn.split_columns_by_delimiter(df, 'nume_id_duplicates', ' ', 1).rename(columns = {'nume_id_duplicates':'num_id_val'})
+        # 2
+        df = fn.coalesce_columns(df, 'f_afiliacion_salud', 'f_de_afiliacion_salud')
+        df = fn.coalesce_columns(df, 'tipo_id_str', 'tipo_id_str_dup')
+        # 3
+        df['marca_sin_informacion'] = np.where((df['num_id'] == df['num_id_val']), 0, 1)
+        df.loc[df['evaluacion_marca'] == 'La consulta no fue exitosa', 'key_fep'] = np.nan
+        # 4 
+        df.loc[df['segundo_apellido'].str.len() == 1, 'sexo'] = df['segundo_apellido']
+        df.loc[df['segundo_apellido'].str.len() == 1, 'segundo_apellido'] = np.nan
+        
+        pos = df.columns.get_loc('est_afiliacion_cf')
+        df.insert(pos + 1, 'municipio_laboral_cf', None) # add missing column
+        df_cleaned = df.drop(columns=['num_id_val','evaluacion_marca']) # auxiliary columns are removed
+        
+    except KeyError as e:
+        raise KeyError(f"column error: {e}")
+    except Exception as e:
+        raise RuntimeError(f"In clean_and_transform_data function, an error occurred during df processing: {e}")
+    
+    return df_cleaned
+        
+
 df_processed = set_up_int_data(df)
 pivot_df = structuring_dataframe(df_processed)
-pivot_df.to_csv('test.csv' , index=False)
-
+df_cleaned = clean_and_transform_data(pivot_df)
+df_cleaned.to_csv('test.csv' , index=False)
