@@ -3,8 +3,9 @@
 ## Index
 1. [Introduction](#introduction)
 2. [Solution strategy](#solution-strategy)
-2. [Technical solution](#technical-solution)
-3. [Project structure](#project-structure)
+3. [Technical solution](#technical-solution)
+4. [Project structure](#project-structure)
+5. [Configuration](#configuration)
 
 
 ## Introduction
@@ -46,7 +47,7 @@ The output of this function is:
 ### Third stage
 The objective of this stage is, through an orchestrator, to call all the pipeline modules that process and transform the data. The purpose of an orchestrator is to coordinate and manage the execution flow of these modules to ensure that data is processed in the correct sequence and outputted correctly. 
 
-The output of this stage is the goal of this project: [RUAF_structured.xlsx](data/mart/ruaf_structured.xlsx). The xlsx file that is stored in the mart stage of the data storage, where it is available to the end user
+The output of this stage is the goal of this project: [RUAF_structured.xlsx](data/mart/ruaf_structured_first.xlsx). The xlsx file that is stored in the mart stage of the data storage, where it is available to the end user
 
 ## Technical solution
 The solution involves organizing the data into three stages (raw, intermediate, and mart) to ensure a clear and structured data flow. Utility scripts are created for column operations and data structures, and pipelines are set up for each stage. The orchestration script manages the execution of all pipelines, and environment variables are used to enhance flexibility and adaptability
@@ -103,5 +104,29 @@ A separate pipeline script is proposed for each data stage defined in the soluti
 
 ```
 
+## Configuration
+
+### Ensure Prerequisites
+
+Make sure you have the following installed on your system:
+```
+- Python 3
+- Pip (Python package installer)
+```
+
+### Clone the Repository
+
+If you haven't already, download or clone the repository to your local machine.
+
+### Running the `setup.sh` Script
+
+1. Open a Git Bash terminal.
+2. Grant execution permissions to the `.sh` file with the command `chmod +x setup.sh`.
+3. Run the `.sh` file with the command `./setup.sh`.
+
+## Notes
+
+* If you have a file with a structure similar to the proposed one, you should change the path in the environment variables to reflect the correct paths and filenames.
+* The `data/marts` folder contains the output from the first run of the project, and its name has been modified by adding '_first' at the end. If you run the project again, the new output will be saved without overwriting the initial file.
 
 
