@@ -79,7 +79,10 @@ A separate pipeline script is proposed for each data stage defined in the soluti
 
 ### Access
 
-**.env:** This file is used to store environment variables, allowing for flexible configuration. If the project needs to be run in a different environment, the variables can be easily modified or added, ensuring adaptability and ease of deployment.
+* **.env:** This file is used to store environment variables, allowing for flexible configuration. If the project needs to be run in a different environment, the variables can be easily modified or added, ensuring adaptability and ease of deployment.
+
+* **run.sh:** Using a setup.sh script is valuable because it automates the setup and execution process, ensuring consistency and saving time. It simplifies the process of creating and activating a virtual environment, installing dependencies, and running the main project scripts, which reduces the risk of human error and makes the project easier to manage and deploy.
+
 
 ## Project structure
 
@@ -97,7 +100,8 @@ A separate pipeline script is proposed for each data stage defined in the soluti
 │   └── mart_pipeline.py               # set up columns to reach muestra_estructurada_RUAF
 ├── resources                          # folder: contains no binary files for docs
 ├── .env                               # contains the environment variables
-├── orchestration.py                   # Main orchestration script
+├── orchestration.py                   # main orchestration script
+├── run.sh                             # automates the setup and execution process
 │
 ├── README.md                          # Project documentation
 └── requirements.txt                   

@@ -24,4 +24,4 @@ echo "The orchestration process of the project will begin"
 python orchestration.py # Run main script
 echo "Data processing completed successfully"
 
-deactivate
+deactivate # close env
