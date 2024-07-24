@@ -4,13 +4,12 @@ from dotenv import load_dotenv
 import src.int_pipeline as int_pipeline
 import src.mart_pipeline as mart_pipeline
 
+load_dotenv()
+output_path = os.getenv("file_path_to_save_ruaf")
+
 logging.basicConfig(level=logging.INFO, format='%(levelname)s %(asctime)s - %(message)s')
 
 def run_pipeline():
-    
-    load_dotenv()
-    output_path = os.getenv("file_path_to_save_ruaf")
-    
     try:
         logging.info("Starting the data extraction process")
         df = int_pipeline.extract_data_int_structure()

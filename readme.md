@@ -53,7 +53,7 @@ The solution involves organizing the data into three stages (raw, intermediate, 
 
 ![code diagram](resources/code_diagram.png)
 
-#### Data stages
+### Data stages
 
 * **Raw (Bronze):** This stage stores the initial input data for the project.
 * **Intermediate** (Silver): This stage holds the initial structured data.
@@ -61,22 +61,22 @@ The solution involves organizing the data into three stages (raw, intermediate, 
 
 This staged approach is important because it ensures a clear and organized flow of data transformation and storage, facilitating better data management and processing.
 
-#### Scripts and Utilities
+### Scripts and Utilities
 
 * **functions.py:** Contains functions for performing various operations on data columns.
 * **data_dicts.py:** Manages data structures to organize and structure the data effectively.
 
 These scripts act as utility scripts and are essential for modular and reusable code.
 
-#### Pipelines
+### Pipelines
 
 A separate pipeline script is proposed for each data stage defined in the solution strategy. These pipelines are responsible for processing and transforming the data at each stage. All scripts are contained within the src directory
 
-#### Orchestration
+### Orchestration
 
 **orchestration.py** is the main function that orchestrates all the pipelines, ensuring they run in the correct sequence. It is crucial because it manages the entire data processing workflow, coordinating the execution of each pipeline and ensuring the final output is correctly generated and stored.
 
-#### Access
+### Access
 
 **.env:** This file is used to store environment variables, allowing for flexible configuration. If the project needs to be run in a different environment, the variables can be easily modified or added, ensuring adaptability and ease of deployment.
 
