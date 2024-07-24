@@ -3,7 +3,7 @@
 ## Index
 1. [Introduction](#introduction)
 2. [Solution strategy](#solution-strategy)
-3. [Repository structure](#repository-structure)
+3. [Project structure](#project-structure)
 
 
 ## Introduction
@@ -42,7 +42,9 @@ The output of this function is:
 ![sec stage](resources/second_stage_mart_pipeline.png)
 3. **Clean and transform data:** Receives the DataFrame produced by the second sub-stage of the mart pipeline. Performs data cleaning, transformation, and column generation operations to produce the final dataset.
 
-## Repository structure
+
+
+## Project structure
 
 ```linux
 

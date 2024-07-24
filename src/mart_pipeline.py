@@ -1,13 +1,7 @@
-import os
-from dotenv import load_dotenv
-import functions as fn
-import data_dicts as dicts
-import int_pipeline
+import src.functions as fn
+import src.data_dicts as dicts
 import pandas as pd
 import numpy as np
-
-
-df = int_pipeline.extract_data_int_structure()
 
 def set_up_int_data(df):
     """
@@ -105,9 +99,10 @@ def clean_and_transform_data(df):
         raise RuntimeError(f"In clean_and_transform_data function, an error occurred during df processing: {e}")
     
     return df_cleaned
-        
 
-df_processed = set_up_int_data(df)
-pivot_df = structuring_dataframe(df_processed)
-df_cleaned = clean_and_transform_data(pivot_df)
-df_cleaned.to_csv('test.csv' , index=False)
+def generate_structured_ruaf_matrix(df):
+    df_processed = set_up_int_data(df)
+    pivot_df = structuring_dataframe(df_processed)
+    df_cleaned = clean_and_transform_data(pivot_df)
+    
+    return df_cleaned

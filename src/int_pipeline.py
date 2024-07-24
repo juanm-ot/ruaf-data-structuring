@@ -1,8 +1,7 @@
 import os
 from dotenv import load_dotenv
-import functions as fn
+import src.functions as fn
 import pandas as pd
-
 
 def extract_data_int_structure():
     """
@@ -21,6 +20,9 @@ def extract_data_int_structure():
     load_dotenv()
     file_path = os.getenv("file_path_to_read")
     save_path = os.getenv("file_path_to_save_int")
+    
+    if not file_path or not save_path:
+        raise ValueError("File paths not set in environment variables")
 
 
     with open(file_path, 'r', encoding='latin1') as file:
@@ -77,9 +79,10 @@ def extract_data_int_structure():
             data.append(row)
 
     df = pd.DataFrame(data)
-    df.to_csv(save_path , index=False)
+    
+    try:
+        df.to_csv(save_path, index=False)
+    except Exception as e:
+        raise RuntimeError(f"Failed to save the DataFrame: {e}")
     
     return df
-
-if __name__ == "__main__":
-    extract_data_int_structure()

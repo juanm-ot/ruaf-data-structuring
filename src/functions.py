@@ -109,3 +109,4 @@ def split_columns_by_delimiter(df, column, delimiter, position):
     """
     df[column] = df[column].str.split(delimiter).str[position]
     return df
+
