@@ -3,6 +3,7 @@
 ## Index
 1. [Introduction](#introduction)
 2. [Solution strategy](#solution-strategy)
+2. [Technical solution](#technical-solution)
 3. [Project structure](#project-structure)
 
 
@@ -42,7 +43,42 @@ The output of this function is:
 ![sec stage](resources/second_stage_mart_pipeline.png)
 3. **Clean and transform data:** Receives the DataFrame produced by the second sub-stage of the mart pipeline. Performs data cleaning, transformation, and column generation operations to produce the final dataset.
 
+### Third stage
+The objective of this stage is, through an orchestrator, to call all the pipeline modules that process and transform the data. The purpose of an orchestrator is to coordinate and manage the execution flow of these modules to ensure that data is processed in the correct sequence and outputted correctly. 
 
+The output of this stage is the goal of this project: [RUAF_structured.xlsx](data/mart/ruaf_structured.xlsx). The xlsx file that is stored in the mart stage of the data storage, where it is available to the end user
+
+## Technical solution
+The solution involves organizing the data into three stages (raw, intermediate, and mart) to ensure a clear and structured data flow. Utility scripts are created for column operations and data structures, and pipelines are set up for each stage. The orchestration script manages the execution of all pipelines, and environment variables are used to enhance flexibility and adaptability
+
+![code diagram](resources/code_diagram.png)
+
+#### Data stages
+
+* **Raw (Bronze):** This stage stores the initial input data for the project.
+* **Intermediate** (Silver): This stage holds the initial structured data.
+* **Mart (Gold):** This stage contains the final output data of the project.
+
+This staged approach is important because it ensures a clear and organized flow of data transformation and storage, facilitating better data management and processing.
+
+#### Scripts and Utilities
+
+* **functions.py:** Contains functions for performing various operations on data columns.
+* **data_dicts.py:** Manages data structures to organize and structure the data effectively.
+
+These scripts act as utility scripts and are essential for modular and reusable code.
+
+#### Pipelines
+
+A separate pipeline script is proposed for each data stage defined in the solution strategy. These pipelines are responsible for processing and transforming the data at each stage. All scripts are contained within the src directory
+
+#### Orchestration
+
+**orchestration.py** is the main function that orchestrates all the pipelines, ensuring they run in the correct sequence. It is crucial because it manages the entire data processing workflow, coordinating the execution of each pipeline and ensuring the final output is correctly generated and stored.
+
+#### Access
+
+**.env:** This file is used to store environment variables, allowing for flexible configuration. If the project needs to be run in a different environment, the variables can be easily modified or added, ensuring adaptability and ease of deployment.
 
 ## Project structure
 
@@ -57,10 +93,12 @@ The output of this function is:
 │   │── data_dicts.py                  # stores data structures for manage vars
 │   │── functions.py                   # stores functions for column operation
 │   │── int_pipeline.py                # transform unstructured data into dataframe
-│   └── mart_pipeline.py
-├── resources                          # contains no binary files for docs
+│   └── mart_pipeline.py               # set up columns to reach muestra_estructurada_RUAF
+├── resources                          # folder: contains no binary files for docs
 ├── .env                               # contains the environment variables
+├── orchestration.py                   # Main orchestration script
 │
+├── README.md                          # Project documentation
 └── requirements.txt                   
 
 ```
