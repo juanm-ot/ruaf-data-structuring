@@ -47,7 +47,7 @@ The output of this function is:
 ### Third stage
 The objective of this stage is, through an orchestrator, to call all the pipeline modules that process and transform the data. The purpose of an orchestrator is to coordinate and manage the execution flow of these modules to ensure that data is processed in the correct sequence and outputted correctly. 
 
-The output of this stage is the goal of this project: [RUAF_structured.xlsx](data/mart/ruaf_structured_first.xlsx). The xlsx file that is stored in the mart stage of the data storage, where it is available to the end user
+The output of this stage is the goal of this project: [RUAF_structured.xlsx](data/mart/ruaf_structured__first.xlsx). The xlsx file that is stored in the mart stage of the data storage, where it is available to the end user
 
 ## Technical solution
 The solution involves organizing the data into three stages (raw, intermediate, and mart) to ensure a clear and structured data flow. Utility scripts are created for column operations and data structures, and pipelines are set up for each stage. The orchestration script manages the execution of all pipelines, and environment variables are used to enhance flexibility and adaptability
@@ -122,11 +122,11 @@ Make sure you have the following installed on your system:
 
 If you haven't already, download or clone the repository to your local machine.
 
-### Running the `setup.sh` Script
+### Running the `run.sh` Script
 
 1. Open a Git Bash terminal.
-2. Grant execution permissions to the `.sh` file with the command `chmod +x setup.sh`.
-3. Run the `.sh` file with the command `./setup.sh`.
+2. Grant execution permissions to the `.sh` file with the command `chmod +x run.sh`.
+3. Run the `.sh` file with the command `./run.sh`.
 
 ## Notes
 
